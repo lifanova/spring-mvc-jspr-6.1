@@ -14,7 +14,7 @@ public class PostRepository {
     private final AtomicInteger ID = new AtomicInteger(0);
 
     public List<Post> all() {
-        postsList.forEach(System.out::println);
+        //postsList.forEach(System.out::println);
 
         return postsList;
     }
@@ -27,7 +27,7 @@ public class PostRepository {
 
     public Post save(Post post) {
         if (post.getId() == 0) {
-           return addPost(post);
+            return addPost(post);
         }
 
         postsList.stream().filter(x -> x.getId() == post.getId())
@@ -44,16 +44,11 @@ public class PostRepository {
         return post;
     }
 
-    public boolean removeById(long id) {
+    public Optional<Post> removeById(long id) {
         Optional<Post> post = postsList.stream().filter(x -> x.getId() == id).findFirst();
 
         post.ifPresent(postsList::remove);
 
-        if (post.isPresent()) {
-            postsList.remove(post);
-            return true;
-        }
-
-        return false;
+        return post;
     }
 }
